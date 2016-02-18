@@ -4,7 +4,7 @@ use 5.008;
 use strict;
 use warnings;
 
-our $VERSION = '1.000_001';
+our $VERSION = '1.000_002';
 $VERSION = eval $VERSION;
 
 use parent qw( Template::Plugin::Filter );
