@@ -13,6 +13,8 @@ my $tester = sub {
     my $tt = Template->new or croak $Template::ERROR;
 
     $tt->process(\$tmpl, {}, \$output) or croak $tt->error;
+
+    trim($output, $html);
     is($output, $html, $desc);
 };
 
@@ -28,14 +30,11 @@ Bar
 EO_TMPL
 
 <<EO_HTML,
-
 <p>Foo</p>
 <p>Bar</p>
-
 EO_HTML
 
 'Simple paragraphs',
-
 ],
 
 [
@@ -48,16 +47,13 @@ EO_HTML
 EO_TMPL
 
 <<EO_HTML,
-
 <ul>
 <li>Foo</li>
 <li>Bar</li>
 </ul>
-
 EO_HTML
 
 'Bullet list',
-
 ],
 
 [
@@ -72,11 +68,9 @@ $frobnicator->run( $x );
 EO_TMPL
 
 <<'EO_HTML',
-
 <pre><code class="language-perl">my $x = $y + $z;
 $frobnicator-&gt;run( $x );
 </code></pre>
-
 EO_HTML
 
 'Code block',
@@ -86,6 +80,13 @@ EO_HTML
 
 for my $case ( @cases ) {
     $tester->(@$case);
+}
+
+sub trim {
+    for ( @_ ) {
+        s/\A\s+//;
+        s/\s+\z//;
+    }
 }
 
 done_testing;
