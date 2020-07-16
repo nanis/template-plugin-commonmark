@@ -76,6 +76,42 @@ EO_HTML
 'Code block',
 ],
 
+[
+<<'EO_TMPL',
+[% USE CommonMark %]
+[% FILTER cmark %]
+Foo
+
+<span>Bar</span>
+[% END %]
+EO_TMPL
+
+<<EO_HTML,
+<p>Foo</p>
+<p><!-- raw HTML omitted -->Bar<!-- raw HTML omitted --></p>
+EO_HTML
+
+'Safe, no embedded HTML',
+],
+
+  [
+<<'EO_TMPL',
+[% USE CommonMark(unsafe=1) %]
+[% FILTER cmark %]
+Foo
+
+<span>Bar</span>
+[% END %]
+EO_TMPL
+
+<<EO_HTML,
+<p>Foo</p>
+<p><span>Bar</span></p>
+EO_HTML
+
+'Embed HTML',
+],
+
 );
 
 for my $case ( @cases ) {
