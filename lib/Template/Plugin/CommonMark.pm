@@ -30,6 +30,7 @@ sub filter {
     $config->{normalize} and $opt |= CommonMark::OPT_NORMALIZE;
     $config->{validate_utf8} and $opt |= CommonMark::OPT_VALIDATE_UTF8;
     $config->{smart} and $opt |= CommonMark::OPT_SMART;
+    $config->{unsafe} and $opt |= CommonMark::OPT_UNSAFE;
 
     CommonMark->markdown_to_html($text, $opt)
 }
